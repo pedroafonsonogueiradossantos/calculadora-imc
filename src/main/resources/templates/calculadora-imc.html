@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora de IMC</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="d-flex align-items-center vh-100" style="display:flex;">
+    <div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+        <div class="d-flex align-items-center justify-content-center" style="width: 500px; height: 500px; background-color: #f0f0f0; border-radius: 25px;">
+            <div class="container mt-5">
+                <div class="text-center">
+                    <h2>Calculadora de IMC</h2>
+                </div>
+                <form th:action="@{/calcular-imc}" th:object="${imcData}" method="post">
+                    <div class="mb-3">
+                        <label for="peso" class="form-label">Peso (kg)</label>
+                        <input type="text" class="form-control" id="peso" th:field="*{peso}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="altura" class="form-label">Altura (m)</label>
+                        <input type="text" class="form-control" id="altura" th:field="*{altura}">
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="calcularBtn">Calcular</button>
+                    <a type="reset" class="btn btn-primary" href="http://localhost:8080">Resetar</a>
+                </form>
+                <div class="resultado" id="resultado" th:if="${imcResultado != null}" style="margin-top:25px;">
+                    <h3>Resultado do IMC</h3>
+                    <p>O seu IMC é: <span th:text="${imcResultado}"></span></p>
+                    <p>Classificação: <span th:text="${classificacao}"></span></p>
+                </div>
+            </div>
+        </div>
+        <div class="container mt-5" style="max-width:500px;" th:if="${imcResultado != null}">
+            <h2>Classificações de IMC</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>IMC</th>
+                    <th>Classificação</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Menor que 18,5</td>
+                    <td>Abaixo do peso</td>
+                </tr>
+                <tr>
+                    <td>18,5 a 24,9</td>
+                    <td>Peso normal</td>
+                </tr>
+                <tr>
+                    <td>25,0 a 29,9</td>
+                    <td>Sobrepeso</td>
+                </tr>
+                <tr>
+                    <td>30,0 a 34,9</td>
+                    <td>Obesidade grau 1</td>
+                </tr>
+                <tr>
+                    <td>35,0 a 39,9</td>
+                    <td>Obesidade grau 2</td>
+                </tr>
+                <tr>
+                    <td>Maior ou igual a 40,0</td>
+                    <td>Obesidade grau 3</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
